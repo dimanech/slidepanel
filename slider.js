@@ -5,7 +5,7 @@
  * Copyright © 2017, D.Nechepurenko <dimanechepurenko@gmail.com>
  * Published under MIT license.
  *
- * Parallax scroll panels effect like on old Yahoo Weather mobile app
+ * Parallaxed scroll panels like on old Yahoo Weather mobile app
  */
 
 var SlidePanel = function (options) {
@@ -352,17 +352,17 @@ SlidePanel.prototype = {
 
 	initEventListeners: function () {
 		this.slider.addEventListener('mousedown', this.touchStartHandler);
-		this.slider.addEventListener('touchstart', this.touchStartHandler, {passive: true});
+		this.slider.addEventListener('touchstart', this.touchStartHandler);
 
 		this.slider.addEventListener('mouseup', this.touchEndHandler);
-		this.slider.addEventListener('touchend', this.touchEndHandler, {passive: true});
+		this.slider.addEventListener('touchend', this.touchEndHandler);
 
 		this.instance.addEventListener('keydown', this.keyDownHandler);
 		this.instance.addEventListener('dragstart', this.drugingHandler);
 
 		this.instance.addEventListener('keydown', this.disableAutoPlayHandler);
 		this.instance.addEventListener('mousedown', this.disableAutoPlayHandler);
-		this.instance.addEventListener('touchstart', this.disableAutoPlayHandler, {passive: true});
+		this.instance.addEventListener('touchstart', this.disableAutoPlayHandler);
 	},
 
 	destroy: function () {
