@@ -1,0 +1,57 @@
+.carousel-container {
+	position: relative;
+	overflow: hidden;
+	/*padding: 40px;*/
+}
+
+.carousel {
+	position: relative;
+	width: 100%;
+	white-space: nowrap;
+	margin: 0;
+	padding: 0;
+	display: block;
+	font-size: 0;
+	will-change: transform;
+	text-align: center;
+}
+
+.carousel,
+.carousel .box {
+	transition: transform ease 0.5s;
+}
+
+.carousel.grabbing,
+.carousel.grabbing .box {
+	transition: none;
+}
+
+.box {
+	display: inline-block;
+	font-size: 1rem;
+	width: calc(25% - 2px);
+	height: 100%;
+	padding: 1px;
+	overflow: hidden;
+}
+
+.card__img {
+	width: 100%;
+	padding-bottom: 127%;
+	margin-bottom: 20px;
+	background-color: #eee;
+	overflow: hidden;
+	position: relative;
+}
+
+.card__img img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.card {
+
+}
