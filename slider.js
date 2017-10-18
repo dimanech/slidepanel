@@ -291,7 +291,7 @@ SlidePanel.prototype = {
 	},
 
 	onTouchMove: function (event) {
-		var x = event.touches !== undefined ? event.touches[0] : event.clientX;
+		var x = event.touches !== undefined ? event.touches[0].pageX : event.clientX;
 
 		this.deltaX = (this.initialX - x) / this.windowWidth * 70;
 
@@ -352,17 +352,17 @@ SlidePanel.prototype = {
 
 	initEventListeners: function () {
 		this.slider.addEventListener('mousedown', this.touchStartHandler);
-		this.slider.addEventListener('touchstart', this.touchStartHandler);
+		this.slider.addEventListener('touchstart', this.touchStartHandler, {passive: true});
 
 		this.slider.addEventListener('mouseup', this.touchEndHandler);
-		this.slider.addEventListener('touchend', this.touchEndHandler);
+		this.slider.addEventListener('touchend', this.touchEndHandler, {passive: true});
 
 		this.instance.addEventListener('keydown', this.keyDownHandler);
 		this.instance.addEventListener('dragstart', this.drugingHandler);
 
 		this.instance.addEventListener('keydown', this.disableAutoPlayHandler);
 		this.instance.addEventListener('mousedown', this.disableAutoPlayHandler);
-		this.instance.addEventListener('touchstart', this.disableAutoPlayHandler);
+		this.instance.addEventListener('touchstart', this.disableAutoPlayHandler, {passive: true});
 	},
 
 	destroy: function () {
