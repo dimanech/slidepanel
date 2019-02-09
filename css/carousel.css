@@ -1,7 +1,7 @@
 .carousel-container {
 	position: relative;
 	overflow: hidden;
-	/*padding: 40px;*/
+	padding: 40px;
 }
 
 .carousel {
@@ -9,7 +9,7 @@
 	width: 100%;
 	white-space: nowrap;
 	margin: 0;
-	padding: 0;
+	padding: 20px 0;
 	display: block;
 	font-size: 0;
 	will-change: transform;

@@ -5,10 +5,11 @@
  * Copyright © 2017, D.Nechepurenko <dimanechepurenko@gmail.com>
  * Published under MIT license.
  *
- * Parallaxed scroll panels like on old Yahoo Weather mobile app
+ * Extremely lightweight (>0.1ms execution time (Chrome 61)) scrolling panels
+ * with parallax effect like on old Yahoo Weather mobile app
  */
 
-var SlidePanel = function (options) {
+function SlidePanel(options) {
 	this.instance = options.inst;
 	this.namespace = options.namespace;
 	this.slider = this.instance.children[0];
@@ -21,6 +22,7 @@ var SlidePanel = function (options) {
 
 	this.windowWidth = 0;
 	this.currentPanel = 0;
+	this.oldPanel = 0;
 	this.initialX = 0;
 	this.deltaX = 0;
 
@@ -37,7 +39,7 @@ var SlidePanel = function (options) {
 		this.initEventListeners();
 		this.changePanel();
 	}
-};
+}
 
 SlidePanel.prototype = {
 	initConfig: function () {
@@ -60,40 +62,19 @@ SlidePanel.prototype = {
 	initPanels: function () {
 		for (var i = 0; i < this.panelsCount + 1; i++) {
 			var slide = this.panelsList[i];
-			slide.setAttribute('role', 'tabpanel');
-			slide.setAttribute('id', 'tabpanel-' + this.namespace + i);
-			slide.setAttribute('aria-describedby', 'tab-' + this.namespace + i);
-			slide.setAttribute('aria-hidden', 'true');
-			slide.setAttribute('tabindex', '-1');
+			slide.setAttribute('tabindex', '0');
 		}
-	},
-
-	updatePanels: function () {
-		var itemsList = this.panelsList;
-		var activeItem = itemsList[this.currentPanel];
-
-		for (var slide = 0; slide < itemsList.length; slide++) {
-			itemsList[slide].classList.remove('active');
-			itemsList[slide].setAttribute('tabindex', '-1');
-			itemsList[slide].setAttribute('aria-hidden', 'true');
-			itemsList[slide].setAttribute('aria-expanded', 'false');
-		}
-
-		activeItem.classList.add('active');
-		activeItem.setAttribute('tabindex', '0');
-		activeItem.setAttribute('aria-expanded', 'true');
-		activeItem.setAttribute('aria-hidden', 'false');
 	},
 
 	destroyPanels: function () {
 		for (var i = 0; i < this.panelsCount + 1; i++) {
 			var slide = this.panelsList[i];
-			slide.removeAttribute('role');
-			slide.removeAttribute('id');
-			slide.removeAttribute('aria-describedby');
-			slide.removeAttribute('aria-expanded');
-			slide.removeAttribute('aria-hidden');
-			slide.removeAttribute('tabindex');
+			//slide.removeAttribute('role');
+			//slide.removeAttribute('id');
+			//slide.removeAttribute('aria-describedby');
+			//slide.removeAttribute('aria-expanded');
+			//slide.removeAttribute('aria-hidden');
+			//slide.removeAttribute('tabindex');
 			slide.classList.remove('active');
 		}
 	},
@@ -105,24 +86,15 @@ SlidePanel.prototype = {
 
 		var pagination = document.createElement('div');
 		pagination.classList.add('slider-pagination');
-		pagination.setAttribute('role', 'tablist');
-		pagination.setAttribute('aria-multiselectable', 'false');
 
 		for (var i = 0; i < this.panelsCount + 1; i++) {
 			var pager = document.createElement('button');
 			pager.classList.add('slider-pagination__elem');
 			pager.classList.add('slider-pagination__elem_' + i);
-			pager.setAttribute('id', 'tab-' + this.namespace + i);
-			pager.setAttribute('aria-role', 'tab');
-			pager.setAttribute('aria-controls', 'tabpanel-' + this.namespace + i);
-			pager.setAttribute('aria-label', (i + 1) + ' from ' + (this.panelsCount + 1));
-			pager.setAttribute('tabindex', '-1');
 			pager.onclick = this.navigateTo.bind(this, i);
 
 			if (i === 0) {
 				pager.classList.add('active');
-				pager.setAttribute('tabindex', '0');
-				pager.setAttribute('aria-selected', 'true');
 			}
 
 			pagination.appendChild(pager);
@@ -138,17 +110,9 @@ SlidePanel.prototype = {
 		}
 
 		var itemsList = this.paginationList;
-		var activeItem = itemsList[this.currentPanel];
 
-		for (var slide = 0; slide < itemsList.length; slide++) {
-			itemsList[slide].classList.remove('active');
-			itemsList[slide].setAttribute('tabindex', '-1');
-			itemsList[slide].setAttribute('aria-selected', 'false');
-		}
-
-		activeItem.classList.add('active');
-		activeItem.setAttribute('tabindex', '0');
-		activeItem.setAttribute('aria-selected', 'true');
+		itemsList[this.oldPanel].classList.remove('active');
+		itemsList[this.currentPanel].classList.add('active');
 	},
 
 	initNavigation: function () {
@@ -170,7 +134,7 @@ SlidePanel.prototype = {
 		this.arrowNext.classList.add('slider-control');
 		this.arrowNext.classList.add('next');
 		this.arrowNext.setAttribute('aria-label', 'Next');
-		this.arrowNext.onclick = function() {
+		this.arrowNext.onclick = function () {
 			self.navigateNext();
 		};
 
@@ -237,7 +201,6 @@ SlidePanel.prototype = {
 
 	changePanel: function () {
 		this.stopAutoPlay();
-		this.updatePanels();
 		this.updatePagination();
 
 		window.requestAnimationFrame(this.animateChange.bind(this));
@@ -247,6 +210,7 @@ SlidePanel.prototype = {
 
 	navigatePrev: function (isTouch) {
 		if (this.currentPanel > 0) {
+			this.oldPanel = this.currentPanel;
 			this.currentPanel--;
 			this.changePanel();
 		} else {
@@ -260,6 +224,7 @@ SlidePanel.prototype = {
 
 	navigateNext: function (isTouch) {
 		if (this.currentPanel < this.panelsCount) {
+			this.oldPanel = this.currentPanel;
 			this.currentPanel++;
 			this.changePanel();
 		} else {
@@ -274,6 +239,7 @@ SlidePanel.prototype = {
 	navigateTo: function (index) {
 		// Used by pagination
 		if (index < this.panelsCount || index > 0) {
+			this.oldPanel = this.currentPanel;
 			this.currentPanel = index;
 			this.changePanel();
 		}
@@ -281,6 +247,7 @@ SlidePanel.prototype = {
 
 	navigateInfinite: function () {
 		// Used by autoplay
+		this.oldPanel = this.currentPanel;
 		this.currentPanel++;
 
 		if (this.currentPanel > this.panelsCount) {
@@ -338,11 +305,11 @@ SlidePanel.prototype = {
 	},
 
 	onKeyDown: function (event) {
-		if (event.keyCode === 39) {
-			this.navigateNext();
-		}
-		if (event.keyCode === 37) {
-			this.navigatePrev();
+		switch (event.key) {
+			case 'ArrowRight':
+				return this.navigateNext();
+			case 'ArrowLeft':
+				return this.navigatePrev();
 		}
 	},
 
@@ -352,17 +319,17 @@ SlidePanel.prototype = {
 
 	initEventListeners: function () {
 		this.slider.addEventListener('mousedown', this.touchStartHandler);
-		this.slider.addEventListener('touchstart', this.touchStartHandler, {passive: true});
+		this.slider.addEventListener('touchstart', this.touchStartHandler, { passive: true });
 
 		this.slider.addEventListener('mouseup', this.touchEndHandler);
-		this.slider.addEventListener('touchend', this.touchEndHandler, {passive: true});
+		this.slider.addEventListener('touchend', this.touchEndHandler, { passive: true });
 
 		this.instance.addEventListener('keydown', this.keyDownHandler);
 		this.instance.addEventListener('dragstart', this.drugingHandler);
 
 		this.instance.addEventListener('keydown', this.disableAutoPlayHandler);
 		this.instance.addEventListener('mousedown', this.disableAutoPlayHandler);
-		this.instance.addEventListener('touchstart', this.disableAutoPlayHandler, {passive: true});
+		this.instance.addEventListener('touchstart', this.disableAutoPlayHandler, { passive: true });
 	},
 
 	destroy: function () {
@@ -385,14 +352,15 @@ SlidePanel.prototype = {
 
 // Parallax like effect
 
-var ParallaxSlider = function (options) {
+function ParallaxSlider(options) {
 	SlidePanel.call(this, options);
 	this.layersList = options.config.layersList;
 	this.layerShift = 4;
 	this.initLayerPosition();
-};
+}
 
 ParallaxSlider.prototype = Object.create(SlidePanel.prototype);
+ParallaxSlider.prototype.constructor = ParallaxSlider;
 
 ParallaxSlider.prototype.initLayerPosition = function () {
 	for (var layer = 0; layer < this.layersList.length; layer++) {
@@ -400,7 +368,7 @@ ParallaxSlider.prototype.initLayerPosition = function () {
 	}
 
 	for (var panel = 0; panel < this.panelsList.length; panel++) {
-		this.panelsList[panel].style.left =  panel * 100 + '%';
+		this.panelsList[panel].style.left = panel * 100 + '%';
 	}
 };
 
@@ -409,7 +377,7 @@ ParallaxSlider.prototype.animateTouch = function () {
 
 	for (var layer = 0; layer < this.layersList.length; layer++) {
 		this.layersList[layer].style.transform =
-			'translate3d(' + (this.currentPanel * (this.moveStep / this.layerShift) + this.deltaX / 4) + '%,0,0)';
+			'translate3d(' + (this.currentPanel * (this.moveStep / this.layerShift) + this.deltaX / this.layerShift) + '%,0,0)';
 	}
 };
 
@@ -424,14 +392,15 @@ ParallaxSlider.prototype.animateChange = function () {
 
 // Flip like effect
 
-var FlipSlider = function (options) {
+function FlipSlider(options) {
 	SlidePanel.call(this, options);
 	this.layersList = options.config.layersList;
 	this.layerShift = 2;
 	this.initLayerPosition();
-};
+}
 
 FlipSlider.prototype = Object.create(SlidePanel.prototype);
+FlipSlider.prototype.constructor = FlipSlider;
 
 FlipSlider.prototype.initLayerPosition = function () {
 	for (var layer = 0; layer < this.layersList.length; layer++) {
@@ -463,14 +432,32 @@ FlipSlider.prototype.animateChange = function () {
 
 // Carousel
 
-var Carousel = function (options) {
+function Carousel(options) {
 	SlidePanel.call(this, options);
-	this.layersList = options.config.layersList;
-};
+}
 
 Carousel.prototype = Object.create(SlidePanel.prototype);
+Carousel.prototype.constructor = Carousel;
 
 Carousel.prototype.animateTouch = function () {
+	this.slider.style.transform = 'translate3d(' + (-this.currentPanel * this.moveStep - this.deltaX) + '%,0,0)';
+};
+
+Carousel.prototype.animateChange = function () {
+	this.slider.style.transform = 'translate3d(' + -this.currentPanel * this.moveStep + '%,0,0)';
+};
+
+// Carousel with slice effect
+
+function CarouselSliced(options) {
+	SlidePanel.call(this, options);
+	this.layersList = options.config.layersList;
+}
+
+CarouselSliced.prototype = Object.create(SlidePanel.prototype);
+CarouselSliced.prototype.constructor = CarouselSliced;
+
+CarouselSliced.prototype.animateTouch = function () {
 	this.slider.style.transform = 'translate3d(' + (-this.currentPanel * this.moveStep - this.deltaX) + '%,0,0)';
 
 	for (var bg = 0; bg < this.layersList.length; bg++) {
@@ -482,7 +469,7 @@ Carousel.prototype.animateTouch = function () {
 	}
 };
 
-Carousel.prototype.animateChange = function () {
+CarouselSliced.prototype.animateChange = function () {
 	this.slider.style.transform = 'translate3d(' + -this.currentPanel * this.moveStep + '%,0,0)';
 
 	for (var bg = 0; bg < this.layersList.length; bg++) {
@@ -491,57 +478,68 @@ Carousel.prototype.animateChange = function () {
 };
 
 function initSliders() {
-	var page = document;
-	var sliders = page.querySelectorAll('[data-sliding-panel]');
+	var sliders = document.querySelectorAll('[data-sliding-panel]');
 
 	for (var slider = 0; slider < sliders.length; slider++) {
 		var inst = sliders[slider];
 
-		if (inst.hasAttribute('data-slider-parallax')) {
-			new ParallaxSlider({
-				inst: inst,
-				namespace: slider,
-				config: {
-					autoplay: true,
-					autoplaySpeed: 3000,
-					arrows: true,
-					dots: true,
-					panelsToSlide: 1,
-					layersList: inst.querySelectorAll('.slide__bg')
-				}
-			});
+		switch (true) {
+			case inst.hasAttribute('data-slider-parallax'):
+				new ParallaxSlider({
+					inst: inst,
+					namespace: slider,
+					config: {
+						autoplay: false,
+						autoplaySpeed: 3000,
+						arrows: true,
+						dots: true,
+						panelsToSlide: 1,
+						layersList: inst.querySelectorAll('.slide__bg')
+					}
+				});
+				break;
+			case inst.hasAttribute('data-slider-flip'):
+				new FlipSlider({
+					inst: inst,
+					namespace: slider,
+					config: {
+						autoplay: false,
+						autoplaySpeed: 3000,
+						arrows: true,
+						dots: true,
+						panelsToSlide: 1,
+						layersList: inst.querySelectorAll('.gallery__img')
+					}
+				});
+				break;
+			case inst.hasAttribute('data-carousel'):
+				new Carousel({
+					inst: inst,
+					namespace: slider,
+					config: {
+						autoplay: false,
+						autoplaySpeed: 3000,
+						arrows: true,
+						dots: false,
+						panelsToSlide: 4,
+					}
+				});
+				break;
+			case inst.hasAttribute('data-carousel-sliced'):
+				new CarouselSliced({
+					inst: inst,
+					namespace: slider,
+					config: {
+						autoplay: false,
+						autoplaySpeed: 3000,
+						arrows: true,
+						dots: false,
+						panelsToSlide: 4,
+						layersList: inst.querySelectorAll('.box')
+					}
+				});
+				break;
 		}
-
-		if (inst.hasAttribute('data-slider-flip')) {
-			window.flip = new FlipSlider({
-				inst: inst,
-				namespace: slider,
-				config: {
-					autoplay: false,
-					autoplaySpeed: 3000,
-					arrows: true,
-					dots: true,
-					panelsToSlide: 1,
-					layersList: inst.querySelectorAll('.gallery__img')
-				}
-			});
-		}
-
-		if (inst.hasAttribute('data-carousel')) {
-			new Carousel({
-				inst: inst,
-				namespace: slider,
-				config: {
-					autoplay: false,
-					autoplaySpeed: 3000,
-					arrows: true,
-					dots: true,
-					panelsToSlide: 4,
-					layersList: inst.querySelectorAll('.box')
-				}
-			});
-		}
-
 	}
 }
 

@@ -8,24 +8,49 @@
 	<link rel="stylesheet" href="css/slider.css">
 	<link rel="stylesheet" href="css/carousel.css">
 	<link rel="stylesheet" href="css/gallery.css">
+	<!--<link rel="stylesheet" href="test-with-large-noisy.css">-->
 </head>
 <body>
 	<div class="slider-container" data-sliding-panel data-slider-parallax>
 		<ul class="slider">
 			<li class="slide" style="color: white">
-				<div class="slide__bg" style="background-image: url(images/bg-lg-2.jpg);"></div>
+				<picture data-parallax class="slide__bg">
+					<source media="(max-width: 768px)" srcset="images/bg-sm.png"/>
+					<source media="(max-width: 1024px)" srcset="images/bg-md.jpg"/>
+					<img src="images/bg-lg-2.jpg" alt=""/>
+				</picture>
 				<div class="slide__caption" tabindex="0">Some title</div>
 			</li>
 			<li class="slide">
-				<div class="slide__bg" style="background-image: url(images/zoom-in.jpg);"></div>
+				<picture data-parallax class="slide__bg">
+					<source media="(max-width: 768px)" srcset="images/bg-sm.png"/>
+					<source media="(max-width: 1024px)" srcset="images/bg-md.jpg"/>
+					<img src="images/zoom-in.jpg" alt=""/>
+				</picture>
 				<div class="slide__caption" tabindex="0">Some title</div>
 			</li>
 			<li class="slide">
-				<div class="slide__bg" style="background-image: url(images/zoom-out-1.jpg);"></div>
+				<picture data-parallax class="slide__bg">
+					<source media="(max-width: 768px)" srcset="images/bg-sm.png"/>
+					<source media="(max-width: 1024px)" srcset="images/bg-md.jpg"/>
+					<img src="images/zoom-out-1.jpg" alt=""/>
+				</picture>
 				<div class="slide__caption" tabindex="0">Some title</div>
 			</li>
 			<li class="slide" style="color: white">
-				<div class="slide__bg" style="background-image: url(images/zoom-out.jpg);"></div>
+				<picture data-parallax class="slide__bg">
+					<source media="(max-width: 768px)" srcset="images/bg-sm.png"/>
+					<source media="(max-width: 1024px)" srcset="images/bg-md.jpg"/>
+					<img src="images/zoom-out.jpg" alt=""/>
+				</picture>
+				<div class="slide__caption" tabindex="0">Some title</div>
+			</li>
+			<li class="slide">
+				<picture data-parallax class="slide__bg">
+					<source media="(max-width: 768px)" srcset="images/bg-sm.png"/>
+					<source media="(max-width: 1024px)" srcset="images/bg-md.jpg"/>
+					<img src="images/bg-lg-3.webp" alt=""/>
+				</picture>
 				<div class="slide__caption" tabindex="0">Some title</div>
 			</li>
 		</ul>
@@ -35,33 +60,20 @@
 	<div class="gallery-container" data-sliding-panel data-slider-flip>
 		<ul class="gallery">
 			<li class="gallery__item">
-				<img class="gallery__img" src="http://i1.adis.ws/i/Fat_Face/928125_Navy_Model_Profile_1?fmt.options=interlaced&fmt=jpg&w=1080&h=1389&qlt=75&img404=903984_Navy_Model_Front_1" alt="">
+				<img class="gallery__img" src="images/product/928125_Navy_Model_Profile_1.jpeg" alt="">
 			</li>
 			<li class="gallery__item">
-				<img class="gallery__img" src="http://i1.adis.ws/i/Fat_Face/928125_Navy_Model_Back_1?fmt.options=interlaced&fmt=jpg&w=1080&h=1389&qlt=75&img404=903984_Navy_Model_Front_1" alt="">
+				<img class="gallery__img" src="images/product/928125_Navy_Model_Back_1.jpeg" alt="">
 			</li>
 			<li class="gallery__item">
-				<img class="gallery__img" src="http://i1.adis.ws/i/Fat_Face/928125_Navy_Model_Detail_1?fmt.options=interlaced&fmt=jpg&w=1080&h=1389&qlt=75&img404=903984_Navy_Model_Front_1" alt="">
+				<img class="gallery__img" src="images/product/928125_Navy_Model_Detail_1.jpeg" alt="">
 			</li>
 			<li class="gallery__item">
-				<img class="gallery__img" src="http://i1.adis.ws/i/Fat_Face/928125_Navy_Flat_Front_1?fmt.options=interlaced&fmt=jpg&w=1080&h=1389&qlt=75&img404=903984_Navy_Model_Front_1" alt="">
+				<img class="gallery__img" src="images/product/928125_Navy_Flat_Front_1.jpeg" alt="">
 			</li>
 			<li class="gallery__item">
-				<img class="gallery__img" src="http://i1.adis.ws/i/Fat_Face/928125_Navy_Flat_Back_1?fmt.options=interlaced&fmt=jpg&w=1080&h=1389&qlt=75&img404=903984_Navy_Model_Front_1" alt="">
+				<img class="gallery__img" src="images/product/928125_Navy_Flat_Back_1.jpeg" alt="">
 			</li>
-		</ul>
-	</div>
-	
-	<a href="">Some</a>
-	
-	<div class="carousel-container">
-		<ul class="carousel">
-			<li class="box" style="background: moccasin"></li>
-			<li class="box" style="background: green"></li>
-			<li class="box" style="background: yellow"></li>
-			<li class="box" style="background: yellowgreen"></li>
-			<li class="box" style="background: greenyellow"></li>
-			<li class="box" style="background: orange"></li>
 		</ul>
 	</div>
 	
@@ -70,7 +82,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="http://i1.adis.ws/i/Fat_Face/928125_Navy_Model_Profile_1?fmt.options=interlaced&fmt=jpg&w=348&h=447&qlt=75&img404=903984_Navy_Model_Front_1" alt="">
+						<img src="images/carousel/935536_Rose-Ash_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -79,7 +91,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="https://i1.adis.ws/s/Fat_Face/926937_Charcoal_PLP_1?$prod-tile-lge$&w=348&h=447&fmt.options=interlaced&fmt=jpg" alt="">
+						<img src="images/carousel/936497_Black_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -88,7 +100,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="https://i1.adis.ws/s/Fat_Face/926662_Grape_PLP_1?$prod-tile-lge$&w=348&h=447&fmt.options=interlaced&fmt=jpg" alt="">
+						<img src="images/carousel/939355_Navy_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -97,7 +109,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="https://i1.adis.ws/s/Fat_Face/927153_Multi_PLP_1?$prod-tile-lge$&w=348&h=447&fmt.options=interlaced&fmt=jpg" alt="">
+						<img src="images/carousel/939534_Navy_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -106,7 +118,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="https://i1.adis.ws/s/Fat_Face/925991_Ivory_PLP_2?$prod-tile-lge$&w=348&h=447&fmt.options=interlaced&fmt=jpg" alt="">
+						<img src="images/carousel/927788_Nightsky_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -115,7 +127,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="http://i1.adis.ws/s/Fat_Face/924303_Golden-Rust_PLP_1?fmt.options=interlaced&fmt=jpg&w=348&h=447&qlt=75" alt="">
+						<img src="images/carousel/937099_Ivory_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -124,7 +136,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="http://i1.adis.ws/s/Fat_Face/930165_Phantom_PLP_1?fmt.options=interlaced&fmt=jpg&w=348&h=447&qlt=75" alt="">
+						<img src="images/carousel/939907_Rose-Ash_PLP_1.jpeg" height="894" width="696" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -133,7 +145,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="http://i1.adis.ws/s/Fat_Face/927447_True-Black_PLP_1?fmt.options=interlaced&fmt=jpg&w=348&h=447&qlt=75" alt="">
+						<img src="images/carousel/924303_Golden-Rust_PLP_1.jpeg" height="447" width="348" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -142,7 +154,7 @@
 			<li class="box">
 				<div class="card">
 					<div class="card__img">
-						<img src="https://i1.adis.ws/s/Fat_Face/926004_Ivory_PLP_1?$prod-tile-lge$&w=348&h=447&fmt.options=interlaced&fmt=jpg" alt="">
+						<img src="images/carousel/926662_Grape_PLP_1.jpeg" height="447" width="348" alt=""/>
 					</div>
 					<h2>Some name here</h2>
 					<div>some some</div>
@@ -151,8 +163,96 @@
 		</ul>
 	</div>
 	
-	<a href="">Some</a>
+	<div class="carousel-container" data-sliding-panel data-carousel-sliced data-items-on-panel="4">
+		<ul class="carousel">
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/935536_Rose-Ash_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/936497_Black_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/939355_Navy_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/939534_Navy_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/927788_Nightsky_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/937099_Ivory_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/939907_Rose-Ash_PLP_1.jpeg" height="894" width="696" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/924303_Golden-Rust_PLP_1.jpeg" height="447" width="348" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+			<li class="box">
+				<div class="card">
+					<div class="card__img">
+						<img src="images/carousel/926662_Grape_PLP_1.jpeg" height="447" width="348" alt=""/>
+					</div>
+					<h2>Some name here</h2>
+					<div>some some</div>
+				</div>
+			</li>
+		</ul>
+	</div>
 	
-	<script src="slider.js"></script>
+	<a href="">Needed for tabindex test</a>
+	
+	<script src="slidePanel.js"></script>
+	<!-- arrival needed only for x-y parallax slider example (first fullscreen slider) -->
+	<script src="arrival/arrival.js"></script>
 </body>
 </html>

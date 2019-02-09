@@ -1,0 +1,3 @@
+[submodule "arrival"]
+	path = arrival
+	url = git@github.com:dimanech/arrival.git
